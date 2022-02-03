@@ -1,0 +1,55 @@
+<div class="container">
+    <h1>Transaction List</h1>
+    <div class="col-12 heading-link">
+      <a href="#" routerLink="/transaction/create" class="btn btn-success">Create New Transaction</a>
+    </div>
+    <table class="table table-bordered">
+        <tr>
+            <th>Date</th>
+          <th>Amount</th>
+          <th>Transaction Type</th>
+          <th class="has-text-centered">Total Amount</th>
+          <th>Description</th>
+          <th width="220px">Action</th>
+        </tr>
+        <div *ngIf="currentPageRows > 0 then listBlock else emptyBlock"></div>
+        <ng-template #listBlock>
+            <tr *ngFor="let transaction of transactionList">
+                <td>{{ transaction.createdAt  | date:'yyyy-MM-dd H:m:s'}}</td>
+                  <td>{{ transaction.amount }}</td>
+                  <td>{{ transaction.transaction_type }}</td>
+                  <td>{{ transaction.total_amount }}</td>
+                  <td>{{ transaction.description }}</td>
+                  <td>
+                    <!--<a href="#" [routerLink]="['/transaction/', transaction.id, 'view']" class="btn btn-info">View</a>-->
+                    <a href="#" [routerLink]="['/transaction/', transaction.id, 'edit']" class="btn btn-info">Edit</a>
+                    <!--<button type="button" (click)="deletetransaction(transaction.id)" class="btn btn-danger">Delete</button>-->
+                  </td>
+                </tr>
+        </ng-template>
+        <ng-template #emptyBlock>
+            <tr>
+                <td colspan="6">No data found</td>
+                </tr>
+        </ng-template>
+      </table>
+      <div class="pagination-div col-12">
+        <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+            <li [ngClass]="{disabled:pager.currentPage == 1}" class="page-item first-item">
+                <a [routerLink]="['/transaction']" [queryParams]="{ page: 1 }" class="page-link">First</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage == 1}" class="page-item previous-item">
+                <a [routerLink]="['/transaction']" [queryParams]="{ page: pager.currentPage - 1 }" class="page-link">Previous</a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage == page}" class="page-item number-item">
+                <a [routerLink]="['/transaction']" [queryParams]="{ page: page }" class="page-link">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage == pager.totalPages}" class="page-item next-item">
+                <a [routerLink]="['/transaction']" [queryParams]="{ page: +pager.currentPage + 1 }" class="page-link">Next</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage == pager.totalPages}" class="page-item last-item">
+                <a [routerLink]="['/transaction']" [queryParams]="{ page: pager.totalPages }" class="page-link">Last</a>
+            </li>
+        </ul>
+    </div>
+ </div>

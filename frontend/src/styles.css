@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+.heading-link{
+    float: left;
+    text-align: right;
+    margin-bottom: 10px;
+    position: relative;
+}
+.form-btn {
+    position: relative;
+    margin-top: 5px;
+}

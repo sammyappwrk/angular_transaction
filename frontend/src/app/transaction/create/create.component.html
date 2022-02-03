@@ -1,0 +1,55 @@
+<div class="container">
+    <h1>Create New Transaction</h1>
+    <div class="col-12 heading-link">
+        <a href="#" routerLink="/transaction" class="btn btn-primary ">Back</a>
+    </div>
+    
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-group">
+            <label for="transaction_type">Transaction Type*</label>
+            <select formControlName="transaction_type" class="form-control">
+                <option value=''>Select Type</option>
+                <option *ngFor="let item of transaction_type"> {{ item }}</option>
+            </select>
+            <div *ngIf="(isError['transaction_type'].errors && isError['transaction_type'].errors['serverError']) || isError['transaction_type'].touched && isError['transaction_type'].invalid" class="alert alert-danger">
+                <div *ngIf="isError['transaction_type'].errors && isError['transaction_type'].errors['required']">Transaction type is required.</div>
+                <div *ngIf="isError['transaction_type'].errors && isError['transaction_type'].errors['serverError']">{{ isError['transaction_type'].errors['serverError']}}</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="amount">Amount*</label>
+            <input 
+                formControlName="amount"
+                id="amount" 
+                type="text" 
+                class="form-control">
+               <!-- <div *ngIf="submitted && isError['amount'].errors" class="invalid-feedback">
+                    <div *ngIf="isError['amount'].errors['required']">Amount is required</div>
+                </div>-->
+            <div *ngIf="(isError['amount'].errors && isError['amount'].errors['serverError']) || 
+            submitted && isError['amount'].invalid" class="alert alert-danger">
+                <div *ngIf="isError['amount'].errors && isError['amount'].errors['required']">amount is required.</div>
+                <div *ngIf="isError['amount'].errors && isError['amount'].errors['numeric']">Enter only number.</div>
+                <div *ngIf="isError['amount'].errors && isError['amount'].errors['min']">Minimum 1 should be added</div>
+                <div *ngIf="isError['amount'].errors && isError['amount'].errors['serverError']">{{ isError['amount'].errors['serverError']}}</div>
+            </div>
+        </div>
+  
+        <div class="form-group">
+            <label for="description">Description*</label>
+            <textarea 
+                formControlName="description"
+                id="description" 
+                type="text" 
+                class="form-control">
+            </textarea>
+            <div *ngIf="isError['description'].errors && isError['description'].errors['serverError']" class="alert alert-danger">
+                <div *ngIf="isError['description'].errors && isError['description'].errors['serverError']">{{ isError['description'].errors['serverError']}}</div>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+        <button class="btn btn-primary form-btn" type="submit" [disabled]="!form.valid">Submit</button>
+        </div>
+        
+    </form>
+</div>
